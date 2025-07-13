@@ -12,6 +12,8 @@ const notificationMutations = require('./Notifications/mutations/notificationMut
 const agentMutations = require('./Profiles/mutations/agentMutation');
 const acquirersMutations = require('./Profiles/mutations/acquirersMutation');
 const propertyMutations = require('./Properties/mutations/propertyMutation');
+const appointmentQueries = require('./Appointments/queries/appointmentQuery');
+const appointmentMutations = require('./Appointments/mutations/appointmentMutation');
 
 const RootQuery = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -21,6 +23,7 @@ const RootQuery = new GraphQLObjectType({
     ...agentQueries,
     ...acquirersQueries,
     ...propertyQueries,
+    ...appointmentQueries
   },
 });
 
@@ -32,6 +35,7 @@ const Mutation = new GraphQLObjectType({
     ...agentMutations,
     ...acquirersMutations,
     ...propertyMutations,
+    ...appointmentMutations
   },
 });
 

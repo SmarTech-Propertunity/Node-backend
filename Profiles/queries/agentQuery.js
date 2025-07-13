@@ -6,14 +6,25 @@ const agentQueries = {
   allAgents: {
     type: new GraphQLList(AgentType),
     resolve: async () => {
-      return await Agent.findAll();
+      const agents = await Agent.findAll();
+      return agents.map(agent => ({
+        ...agent.dataValues,
+        reviews: Array.isArray(agent.reviews) ? agent.reviews : [],
+        salesHistory: Array.isArray(agent.salesHistory) ? agent.salesHistory : [],
+      }));
     },
   },
   agentById: {
     type: AgentType,
     args: { id: { type: GraphQLInt } },
     resolve: async (_, { id }) => {
-      return await Agent.findByPk(id);
+      const agent = await Agent.findByPk(id);
+      if (!agent) return null;
+      return {
+        ...agent.dataValues,
+        reviews: Array.isArray(agent.reviews) ? agent.reviews : [],
+        salesHistory: Array.isArray(agent.salesHistory) ? agent.salesHistory : [],
+      };
     },
   },
 };
